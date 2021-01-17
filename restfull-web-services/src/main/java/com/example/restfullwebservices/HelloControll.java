@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin(origins="http://localhost:4200")
 
-@Controller
+@RestController
 public class HelloControll {
 	//@RequestMapping(method =RequestMethod.GET ,path="/hello-world")
 //	@GetMapping(path="/hello-world")
@@ -17,7 +17,7 @@ public class HelloControll {
 //		return "hello";
 	//}
 	
-	@GetMapping(path="/hello-world-bean")
+	@GetMapping(path="/")
 	public HelloBean dataBean()
 	{
 		//throw new RuntimeException("some errrr occured");

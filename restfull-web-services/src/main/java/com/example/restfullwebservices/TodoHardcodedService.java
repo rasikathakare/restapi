@@ -2,32 +2,33 @@ package com.example.restfullwebservices;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
+
+
 
 
 @Service
 public class TodoHardcodedService {
 	
-	private static List<Todo> todos = new ArrayList<>();
+	private static List<Todo> todos = new ArrayList<Todo>();
 	private static int idCounter = 0;
-	
-	static {
-		todos.add(new Todo(++idCounter, "Rasika","Learn to play guitar", new Date(), false ));
-		todos.add(new Todo(++idCounter, "Rasika","Learn about SpringBoot", new Date(), false ));
-		todos.add(new Todo(++idCounter, "Rasika","Learn about Angular", new Date(), false ));
-	}
-	
+
 	public List<Todo> findAll() {
 		return todos;
 	}
 
+
+	
 	public Todo save(Todo todo) {
 		if(todo.getId()==-1 || todo.getId()==0) {
 			todo.setId(++idCounter);
 			todos.add(todo);
+			
 		} else {
 			deleteById(todo.getId());
 			todos.add(todo);

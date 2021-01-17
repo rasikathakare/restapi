@@ -7,21 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Todo {
-	//@Id
-	//@GeneratedValue
+	@Id
+	@GeneratedValue
 	private long id;
 	private String username;
 	private String description;
-	private Date targetDate;
+	private String targetDate;
 	private boolean isDone;
 	
 	protected Todo() {
 		
 	}
 	
-	public Todo(long id, String username, String description, Date targetDate, boolean isDone) {
+	public Todo(long id, String username, String description, String targetDate, boolean isDone) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -54,11 +54,11 @@ public class Todo {
 		this.description = description;
 	}
 
-	public Date getTargetDate() {
+	public String  getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(Date targetDate) {
+	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
 	}
 
