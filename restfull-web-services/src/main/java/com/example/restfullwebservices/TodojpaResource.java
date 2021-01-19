@@ -24,19 +24,20 @@ public class TodojpaResource {
 	
 	@Autowired
 	private TodoHardcodedService todoService;
-	@Autowired
-	private TodoJpaRepository todoRepose;
 
+	@Autowired
+	private TodoJpaRepository todoJpaRepository;
+
+	
 	@GetMapping("/jpa/users/{username}/todos")
 	public List<Todo> getAllTodos(@PathVariable String username){
-		return todoRepose.findByUsername(username);
-
+		return todoJpaRepository.findAll();
 		//return todoService.findAll();
 	}
 
 	@GetMapping("/jpa/users/{username}/todos/{id}")
 	public Todo getTodo(@PathVariable String username, @PathVariable long id){
-		return todoRepose.findById(id).get();
+		return todoJpaRepository.findById(id).get();
 		//return todoService.findById(id);
 	}
 
@@ -45,13 +46,11 @@ public class TodojpaResource {
 	public ResponseEntity<Void> deleteTodo(
 			@PathVariable String username, @PathVariable long id){
 		
-		Todo todo = todoService.deleteById(id);
+		//Todo todo = todoService.deleteById(id);
+		todoJpaRepository.deleteById(id);
 		
-		if(todo!=null) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.noContent().build();
+		//return ResponseEntity.notFound().build();
 	}
 	
 
@@ -60,24 +59,27 @@ public class TodojpaResource {
 	@PutMapping("/jpa/users/{username}/todos/{id}")
 	public ResponseEntity<Todo> updateTodo(
 			@PathVariable String username,
-			@PathVariable long id, @RequestBody Todo todo){  //method param is bound to req body
+			@PathVariable long id, @RequestBody Todo todo){
 		
-		Todo todoUpdated = todoService.save(todo);
+		//Todo todoUpdated = todoService.save(todo);
+		Todo todoUpdated = todoJpaRepository.save(todo);
 		
 		return new ResponseEntity<Todo>(todo, HttpStatus.OK);
 	}
-	//creating todo
-	@PostMapping("/jpa/users/{username}/todos")
+	
+	@PostMapping("/jpa/users/todos")
 	public ResponseEntity<Void> updateTodo(
-			@PathVariable String username, @RequestBody Todo todo){
+			 @RequestBody Todo todo){
 		
-		Todo createdTodo = todoService.save(todo);
+		//Todo createdTodo = todoService.save(todo);
+//		todo.setUsername(username);
+		 todoJpaRepository.save(todo);
 		
 		//Location
 		//Get current resource url
 		///{id}
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(createdTodo.getId()).toUri();
+				.path("/{id}").buildAndExpand(todo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}
